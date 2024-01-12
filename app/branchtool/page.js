@@ -1,149 +1,66 @@
-'use client'
-import { useState,useEffect } from "react";
+"use client";
+import { Node } from "./components/node.js";
+import { useEffect, useState } from "react";
 
 export default function BranchTool() {
-  const [nodeText, setText] = useState('');
-  const [order,setOrder] = useState(1);
-  const [audioUrl, setAudioUrl] = useState('');
-  const [bsUrl, setBsUrl] = useState('');
-  const [duration,setDuration] = useState(0)
+    const [nodeList, setNodeList] = useState([{ output: "" }]);
+    // const [nodeList, setNodeList] = useState([]);
+    const handleAddNode = () => {
+        setNodeList([...nodeList, { output: "" }]);
+    };
 
-  const [outputJson,setJson] = useState(`{"text":${nodeText},"order":${order}}`)
+    const handleOutputChange = (value, index) => {
+        console.log(value);
+        const newNodes = [...nodeList];
+        // 确保在指定索引处有一个节点对象
+        if (!newNodes[index]) {
+            newNodes[index] = {}; // 如果没有，就创建一个新的对象
+        }
+        newNodes[index].output = value;
+        setNodeList(newNodes);
+    };
 
-  const handleChange = (event)=>{
-    switch (event.target.id) {
-      case 'Text':
-        setText(String(event.target.value))
-        break;
-      case 'order':
-        setOrder(event.target.value)
-        break;
-      case 'audioUrl':
-        setAudioUrl(event.target.value)
-        break;
-      case 'bsUrl':
-        setBsUrl(event.target.value)
-        break;
-      case 'duration':
-        setDuration(event.target.value)
-      default:
-        break;
-    }
-    console.log(`${outputJson}`);
-  }
+    const handleDeleteNode = (index) => {
+        setNodeList(nodeList.filter((_, i) => i !== index));
+    };
 
-  useEffect(()=>{
-    var VoiceInfo = "}";
-    if(audioUrl||bsUrl||duration) {
-      VoiceInfo = `,"audioUrl":"${audioUrl}","bsUrl":"${bsUrl}","duration":${duration}}`;
-    }
-    setJson(`{"text":"${nodeText}","order":${order}`+VoiceInfo)
-  },[nodeText,order,audioUrl,bsUrl,outputJson,duration])
+    return (
+        <div>
+            <div className=" bg-zinc-400 grid grid-cols-1 float-left">
+                {nodeList.map((_, index) => (
+                    <div key={index}>
+                        <button
+                            className="text-center align-middle rounded-full bg-red-500 px-5 mx-5 my-5 text-white list-none"
+                            onClick={() => handleDeleteNode(index)}
+                        >
+                            Delete
+                        </button>
 
-  return (
-    <div className="bg-zinc-400 h-full w-full ">
-      <form className="w-1/2 ml-2">
-        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-          <div className="sm:col-span-4">
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Text
-            </label>
-            <div className="mt-2">
-              <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                <input
-                  type="text"
-                  name="username"
-                  id="Text"
-                  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                  onChange={handleChange}
-                />
-              </div>
+                        <Node
+                            onOutputChange={(output) =>
+                                handleOutputChange(index, output)
+                            }
+                        ></Node>
+                    </div>
+                ))}
             </div>
-          </div>
-          <div className="sm:col-span-4">
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Order
-            </label>
-            <div className="mt-2">
-              <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                <input
-                  type="text"
-                  name="username"
-                  id="order"
-                  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                  onChange={handleChange}
-                />
-              </div>
+            <div className="float-left">
+                <button
+                    className="flex text-center rounded-full bg-green-300 px-5 py-2 mt-5 float-left text-black"
+                    onClick={handleAddNode}
+                >
+                    Add Node
+                </button>
             </div>
-          </div>
-          <div className="sm:col-span-4">
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              AudioUrl
-            </label>
-            <div className="mt-2">
-              <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                <input
-                  type="text"
-                  name="username"
-                  id="audioUrl"
-                  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                  onChange={handleChange}
-                />
-              </div>
+            <div className="flex w-full md-y-5">
+                <span>
+                    {`{
+                    3:[
+                        ${nodeList[0].output}
+                    ]
+                }`}
+                </span>
             </div>
-          </div>
-          <div className="sm:col-span-4">
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              bsUrl
-            </label>
-            <div className="mt-2">
-              <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                <input
-                  type="text"
-                  name="username"
-                  id="bsUrl"
-                  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="sm:col-span-4">
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Duration
-            </label>
-            <div className="mt-2">
-              <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                <input
-                  type="text"
-                  name="username"
-                  id="duration"
-                  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-          </div>
         </div>
-      </form>
-      <div className="h-full w-1/2 float-right">
-        {outputJson}
-      </div>
-    </div>
-  );
+    );
 }
