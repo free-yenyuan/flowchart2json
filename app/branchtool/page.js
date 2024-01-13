@@ -23,6 +23,12 @@ export default function BranchTool() {
         [nodeList]
     );
 
+    const handleDeleteNode = useCallback((index) => {
+        const newNodes = [...nodeList];
+        newNodes.splice(index, 1);
+        setNodeList(newNodes);
+    }, []);
+
     const handleCopy = async () => {
         try {
             await navigator.clipboard.writeText(finalOutput);
@@ -32,9 +38,9 @@ export default function BranchTool() {
         }
     };
 
-    const handleDeleteNode = (index) => {
-        setNodeList(nodeList.filter((_, i) => i !== index));
-    };
+    // const handleDeleteNode = (index) => {
+    //     setNodeList(nodeList.filter((_, i) => i !== index));
+    // };
 
     useEffect(() => {
         setOutput(
@@ -50,6 +56,7 @@ export default function BranchTool() {
                         onOutputChange={(value) =>
                             handleOutputChange(value, index)
                         }
+                        onDeleteNode={handleDeleteNode}
                         title={`📖Node - ${index + 1}`}
                         pre_order={index + 1}
                         key={index}
@@ -63,12 +70,12 @@ export default function BranchTool() {
                 >
                     Add Node
                 </button>
-                <button
+                {/* <button
                     className="flex text-center rounded-full bg-red-500 px-5 py-2 mt-5 float-left text-white hover:bg-red-600 transition-all"
                     onClick={() => handleDeleteNode(index)}
                 >
                     Delete
-                </button>
+                </button> */}
                 <br></br>
             </div>
             <div className="flex justify-center items-center p-4  text-white mt-5 ">

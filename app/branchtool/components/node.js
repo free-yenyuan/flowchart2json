@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export function Node({ onOutputChange, output, title, pre_order }) {
     const [nodeText, setText] = useState("");
@@ -48,9 +49,15 @@ export function Node({ onOutputChange, output, title, pre_order }) {
 
     return (
         <div className="bg-white shadow-md p-4 rounded-md">
-            <form className="ml-2">
+            <div className="ml-2">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl font-semibold">{title}</h2>
+                    <button
+                        className="float-right text-red-500"
+                        // onClick={handleDelete}
+                    >
+                        <DeleteIcon />
+                    </button>
                 </div>
                 {inputType.map((value, index) => (
                     <div
@@ -76,11 +83,12 @@ export function Node({ onOutputChange, output, title, pre_order }) {
                         </div>
                     </div>
                 ))}
-            </form>
+            </div>
             <div className="block h-full w-1/3 ml-2 align-middle sr-only">
                 output:
                 <input
                     className="w-full h-1/2 mx-2 "
+                    defaultValue={output}
                     value={outputJson}
                     readOnly
                 ></input>
