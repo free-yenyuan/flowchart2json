@@ -1,16 +1,16 @@
 "use client";
 import { Node } from "./components/node.js";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 export default function BranchTool() {
     const [nodeList, setNodeList] = useState([{ output: "" }]);
     // const [nodeList, setNodeList] = useState([]);
     const handleAddNode = () => {
+        console.log("111");
         setNodeList([...nodeList, { output: "" }]);
     };
 
-    const handleOutputChange = (value, index) => {
-        console.log(value);
+    const handleOutputChange = useCallback((value, index) => {
         const newNodes = [...nodeList];
         // 确保在指定索引处有一个节点对象
         if (!newNodes[index]) {
@@ -18,7 +18,7 @@ export default function BranchTool() {
         }
         newNodes[index].output = value;
         setNodeList(newNodes);
-    };
+    }, []);
 
     const handleDeleteNode = (index) => {
         setNodeList(nodeList.filter((_, i) => i !== index));
@@ -35,10 +35,10 @@ export default function BranchTool() {
                         >
                             Delete
                         </button>
-
+                        <h1>Node - {index + 1}</h1>
                         <Node
-                            onOutputChange={(output) =>
-                                handleOutputChange(index, output)
+                            onOutputChange={(value) =>
+                                handleOutputChange(value, index)
                             }
                         ></Node>
                     </div>
@@ -54,11 +54,11 @@ export default function BranchTool() {
             </div>
             <div className="flex w-full md-y-5">
                 <span>
-                    {`{
-                    3:[
-                        ${nodeList[0].output}
-                    ]
-                }`}
+                    {"{3:[" +
+                        nodeList.map(
+                            (_, index) => nodeList[index].output + ","
+                        ) +
+                        "]}"}
                 </span>
             </div>
         </div>

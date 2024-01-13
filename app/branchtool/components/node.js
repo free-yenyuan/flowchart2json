@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export function Node({ onOutputChange, output }) {
     const [nodeText, setText] = useState("");
@@ -34,7 +34,6 @@ export function Node({ onOutputChange, output }) {
 
     useEffect(() => {
         if (!nodeText) {
-            setJson("");
             return;
         }
         var VoiceInfo = "}";
@@ -42,7 +41,8 @@ export function Node({ onOutputChange, output }) {
             VoiceInfo = `,"audioUrl":"${audioUrl}","bsUrl":"${bsUrl}","duration":${duration}}`;
         }
         setJson(`{"text":"${nodeText}","order":${order}` + VoiceInfo);
-    }, [nodeText, order, audioUrl, bsUrl, duration]);
+        onOutputChange(`{"text":"${nodeText}","order":${order}` + VoiceInfo);
+    }, [nodeText, order, audioUrl, bsUrl, duration, onOutputChange]);
 
     return (
         <div className="flex bg-zinc-400 h-full w-full float-left ">
@@ -132,14 +132,7 @@ export function Node({ onOutputChange, output }) {
             </form>
             <div className="block h-full w-1/3 ml-2 align-middle mt-2">
                 output:
-                <input
-                    className="w-full"
-                    value={outputJson}
-                    onChange={(e) => {
-                        onOutputChange(outputJson);
-                    }}
-                    readOnly
-                ></input>
+                <input className="w-full" value={outputJson} readOnly></input>
             </div>
         </div>
     );
