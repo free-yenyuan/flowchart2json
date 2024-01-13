@@ -1,10 +1,11 @@
 "use client";
 import { Node } from "./components/node.js";
 import { useEffect, useState, useCallback } from "react";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 export default function BranchTool() {
     const [nodeList, setNodeList] = useState([{ output: "" }]);
-    // const [nodeList, setNodeList] = useState([]);
+    const [finalOutput, setOutput] = useState("");
     const handleAddNode = () => {
         setNodeList([...nodeList, { output: "" }]);
     };
@@ -22,9 +23,24 @@ export default function BranchTool() {
         [nodeList]
     );
 
+    const handleCopy = async () => {
+        try {
+            await navigator.clipboard.writeText(finalOutput);
+            alert("文本已复制到剪贴板！");
+        } catch (err) {
+            console.error("复制到剪贴板失败:", err);
+        }
+    };
+
     const handleDeleteNode = (index) => {
         setNodeList(nodeList.filter((_, i) => i !== index));
     };
+
+    useEffect(() => {
+        setOutput(
+            "{3:[" + nodeList.map((_, index) => nodeList[index].output) + "]}"
+        );
+    }, [nodeList]);
 
     return (
         <div>
@@ -35,6 +51,7 @@ export default function BranchTool() {
                             handleOutputChange(value, index)
                         }
                         title={`📖Node - ${index + 1}`}
+                        pre_order={index + 1}
                         key={index}
                     ></Node>
                 ))}
@@ -54,12 +71,14 @@ export default function BranchTool() {
                 </button>
                 <br></br>
             </div>
-            <div className="flex w-full justify-center items-center">
-                <span>
-                    {"{3:[" +
-                        nodeList.map((_, index) => nodeList[index].output) +
-                        "]}"}
-                </span>
+            <div className="flex justify-center items-center p-4  text-white mt-5 ">
+                <h1 className="text-xl font-semibold text-black">output</h1>
+                <div className="w-[500px] bg-stone-800 p-4 rounded-md ml-5">
+                    <span>{finalOutput}</span>
+                    <button className="ml-5 float-right" onClick={handleCopy}>
+                        <ContentCopyIcon fontSize="small" />
+                    </button>
+                </div>
             </div>
         </div>
     );
