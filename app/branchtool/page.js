@@ -6,19 +6,21 @@ export default function BranchTool() {
     const [nodeList, setNodeList] = useState([{ output: "" }]);
     // const [nodeList, setNodeList] = useState([]);
     const handleAddNode = () => {
-        console.log("111");
         setNodeList([...nodeList, { output: "" }]);
     };
 
-    const handleOutputChange = useCallback((value, index) => {
-        const newNodes = [...nodeList];
-        // 确保在指定索引处有一个节点对象
-        if (!newNodes[index]) {
-            newNodes[index] = {}; // 如果没有，就创建一个新的对象
-        }
-        newNodes[index].output = value;
-        setNodeList(newNodes);
-    }, []);
+    const handleOutputChange = useCallback(
+        (value, index) => {
+            const newNodes = [...nodeList];
+            // 确保在指定索引处有一个节点对象
+            if (!newNodes[index]) {
+                newNodes[index] = {}; // 如果没有，就创建一个新的对象
+            }
+            newNodes[index].output = value;
+            setNodeList(newNodes);
+        },
+        [nodeList]
+    );
 
     const handleDeleteNode = (index) => {
         setNodeList(nodeList.filter((_, i) => i !== index));
@@ -55,9 +57,7 @@ export default function BranchTool() {
             <div className="flex w-full md-y-5">
                 <span>
                     {"{3:[" +
-                        nodeList.map(
-                            (_, index) => nodeList[index].output + ","
-                        ) +
+                        nodeList.map((_, index) => nodeList[index].output) +
                         "]}"}
                 </span>
             </div>

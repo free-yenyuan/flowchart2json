@@ -44,7 +44,7 @@ export function Node({ onOutputChange, output }) {
         }
         setJson(`{"text":"${nodeText}","order":${order}` + VoiceInfo);
         onOutputChange(`{"text":"${nodeText}","order":${order}` + VoiceInfo);
-    }, [nodeText, order, audioUrl, bsUrl, duration, onOutputChange]);
+    }, [nodeText, order, audioUrl, bsUrl, duration]);
 
     return (
         <div className="flex bg-zinc-400 h-full w-full float-left ">
