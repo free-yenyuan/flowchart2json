@@ -70,9 +70,13 @@ export function Node({ onOutputChange, output }) {
                     ))}
                 </div>
             </form>
-            <div className="block h-full w-1/3 ml-2 align-middle mt-2">
+            <div className="block h-full w-1/3 ml-2 align-middle sr-only">
                 output:
-                <input className="w-full" value={outputJson} readOnly></input>
+                <input
+                    className="w-full h-1/2 mx-2 "
+                    value={outputJson}
+                    readOnly
+                ></input>
             </div>
         </div>
     );
