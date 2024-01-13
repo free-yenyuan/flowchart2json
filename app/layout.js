@@ -11,11 +11,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="en" className="w-screen h-screen">
+        <html lang="en" className="w-screen h-lvh bg-slate-100">
             <body
                 className={
                     inter.className +
-                    "w-full h-full grid grid-cols-1 place-items-center "
+                    "w-full h-full grid grid-cols-1 place-items-center bg-slate-100"
                 }
             >
                 <Nav />

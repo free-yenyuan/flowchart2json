@@ -1,7 +1,13 @@
 "use client";
 import Typewriter from "typewriter-effect";
+import GraphemeSplitter from "grapheme-splitter";
 
 export default function Home() {
+    const stringSplitter = (string) => {
+        const splitter = new GraphemeSplitter();
+        return splitter.splitGraphemes(string);
+    };
+
     return (
         <div className="w-1/2 h-1/2 mx-auto">
             <div id="desc" className="">
@@ -9,11 +15,12 @@ export default function Home() {
                     options={{
                         wrapperClassName: "text-4xl",
                         cursorClassName: "text-4xl text-zinc-400",
+                        stringSplitter,
                     }}
                     onInit={(typewriter) => {
                         typewriter
                             .typeString(
-                                "A simple tool box for developing PlayMe."
+                                "A Simple ToolBox📦 For PlayMe Developer."
                             )
                             .callFunction(() => {
                                 console.log("hello!");
