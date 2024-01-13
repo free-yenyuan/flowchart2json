@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 
-export function Node({ onOutputChange, output, title }) {
+export function Node({ onOutputChange, output, title, pre_order }) {
     const [nodeText, setText] = useState("");
-    const [order, setOrder] = useState(1);
+    const [order, setOrder] = useState(pre_order);
     const [audioUrl, setAudioUrl] = useState("");
     const [bsUrl, setBsUrl] = useState("");
     const [duration, setDuration] = useState(0);
@@ -53,7 +53,13 @@ export function Node({ onOutputChange, output, title }) {
                     <h2 className="text-xl font-semibold">{title}</h2>
                 </div>
                 {inputType.map((value, index) => (
-                    <div className="sm:col-span-1 mb-2" key={index}>
+                    <div
+                        className={
+                            "sm:col-span-1 mb-2 " +
+                            (value == "order" ? "sr-only" : "")
+                        }
+                        key={index}
+                    >
                         <label className="block mb-1">{value}</label>
                         <div className="mt-2">
                             <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -61,7 +67,9 @@ export function Node({ onOutputChange, output, title }) {
                                     type="text"
                                     name="username"
                                     id={value}
-                                    className="w-full border border-gray-300 p-2 rounded-md"
+                                    className={
+                                        "w-full border border-gray-300 p-2 rounded-md "
+                                    }
                                     onChange={handleChange}
                                 />
                             </div>
