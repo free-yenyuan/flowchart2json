@@ -28,33 +28,33 @@ export default function BranchTool() {
 
     return (
         <div>
-            <div className=" bg-zinc-400 grid grid-cols-1 float-left">
+            <div className="flex gap-x-2">
                 {nodeList.map((_, index) => (
-                    <div key={index}>
-                        <button
-                            className="text-center align-middle rounded-full bg-red-500 px-5 mx-5 my-5 text-white list-none"
-                            onClick={() => handleDeleteNode(index)}
-                        >
-                            Delete
-                        </button>
-                        <h1>Node - {index + 1}</h1>
-                        <Node
-                            onOutputChange={(value) =>
-                                handleOutputChange(value, index)
-                            }
-                        ></Node>
-                    </div>
+                    <Node
+                        onOutputChange={(value) =>
+                            handleOutputChange(value, index)
+                        }
+                        title={`📖Node - ${index + 1}`}
+                        key={index}
+                    ></Node>
                 ))}
             </div>
-            <div className="float-left">
+            <div className="flex justify-center items-center gap-x-4">
                 <button
-                    className="flex text-center rounded-full bg-green-300 px-5 py-2 mt-5 float-left text-black"
+                    className="flex text-center rounded-full bg-green-300 px-5 py-2 mt-5 float-left text-black hover:bg-green-400 transition-all"
                     onClick={handleAddNode}
                 >
                     Add Node
                 </button>
+                <button
+                    className="flex text-center rounded-full bg-red-500 px-5 py-2 mt-5 float-left text-white hover:bg-red-600 transition-all"
+                    onClick={() => handleDeleteNode(index)}
+                >
+                    Delete
+                </button>
+                <br></br>
             </div>
-            <div className="flex w-full md-y-5">
+            <div className="flex w-full justify-center items-center">
                 <span>
                     {"{3:[" +
                         nodeList.map((_, index) => nodeList[index].output) +
