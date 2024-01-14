@@ -12,6 +12,10 @@ export function Nav() {
             title: "🛠️Branch Tool",
             url: "/branchtool",
         },
+        {
+            title: "💕Intimacy Tool (Developing)",
+            url: "#",
+        },
     ];
     return (
         <nav className="absolute bg-slate-100 shadow-md h-20 w-full top-0 left-0">
