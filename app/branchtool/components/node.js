@@ -15,7 +15,7 @@ export function Node({ onOutputChange, output, title, pre_order, onDelete }) {
     const inputType = ["text", "order", "audioUrl", "bsUrl", "duration"];
 
     const handleDelete = () => {
-        onDelete(); // Calling the onDelete prop function
+        onDelete(pre_order - 1); // Calling the onDelete prop function
     };
 
     const handleChange = (event) => {
@@ -56,12 +56,12 @@ export function Node({ onOutputChange, output, title, pre_order, onDelete }) {
             <div className="ml-2">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl font-semibold">{title}</h2>
-                    <button
+                    {/* <button
                         className="float-right text-red-500"
                         onClick={handleDelete}
                     >
                         <DeleteIcon />
-                    </button>
+                    </button> */}
                 </div>
                 {inputType.map((value, index) => (
                     <div
