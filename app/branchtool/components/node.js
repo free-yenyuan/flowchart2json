@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export function Node({ onOutputChange, output, title, pre_order }) {
+export function Node({ onOutputChange, output, title, pre_order, onDelete }) {
     const [nodeText, setText] = useState("");
     const [order, setOrder] = useState(pre_order);
     const [audioUrl, setAudioUrl] = useState("");
@@ -13,6 +13,10 @@ export function Node({ onOutputChange, output, title, pre_order }) {
     );
 
     const inputType = ["text", "order", "audioUrl", "bsUrl", "duration"];
+
+    const handleDelete = () => {
+        onDelete(); // Calling the onDelete prop function
+    };
 
     const handleChange = (event) => {
         switch (event.target.id) {
@@ -54,7 +58,7 @@ export function Node({ onOutputChange, output, title, pre_order }) {
                     <h2 className="text-xl font-semibold">{title}</h2>
                     <button
                         className="float-right text-red-500"
-                        // onClick={handleDelete}
+                        onClick={handleDelete}
                     >
                         <DeleteIcon />
                     </button>
@@ -75,7 +79,7 @@ export function Node({ onOutputChange, output, title, pre_order }) {
                                     name="username"
                                     id={value}
                                     className={
-                                        "w-full border border-gray-300 p-2 rounded-md "
+                                        "w-full border border-gray-300 p-2 rounded-md transition-all"
                                     }
                                     onChange={handleChange}
                                 />

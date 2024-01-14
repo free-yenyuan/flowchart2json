@@ -23,11 +23,14 @@ export default function BranchTool() {
         [nodeList]
     );
 
-    const handleDeleteNode = useCallback((index) => {
-        const newNodes = [...nodeList];
-        newNodes.splice(index, 1);
-        setNodeList(newNodes);
-    }, []);
+    const handleDeleteNode = useCallback(
+        (index) => {
+            const newNodes = [...nodeList];
+            newNodes.splice(index, 1);
+            setNodeList(newNodes);
+        },
+        [nodeList]
+    );
 
     const handleCopy = async () => {
         try {
@@ -60,6 +63,7 @@ export default function BranchTool() {
                         title={`📖Node - ${index + 1}`}
                         pre_order={index + 1}
                         key={index}
+                        onDelete={handleDeleteNode}
                     ></Node>
                 ))}
             </div>
