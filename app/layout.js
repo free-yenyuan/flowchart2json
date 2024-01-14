@@ -5,7 +5,7 @@ import { Nav } from "./nav.js";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-    title: "Script Toolbox",
+    title: "PlayMe Toolbox",
     description: "",
 };
 
