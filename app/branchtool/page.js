@@ -85,7 +85,7 @@ export default function BranchTool() {
             <div className="flex justify-center items-center p-4  text-white mt-5 ">
                 <h1 className="text-xl font-semibold text-black">output</h1>
                 <div className="w-[500px] bg-stone-800 p-4 rounded-md ml-5">
-                    <span>{finalOutput}</span>
+                    <span className="text-wrap break-words">{finalOutput}</span>
                     <button className="ml-5 float-right" onClick={handleCopy}>
                         <ContentCopyIcon fontSize="small" />
                     </button>
