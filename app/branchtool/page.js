@@ -60,7 +60,7 @@ export default function BranchTool() {
         <div>
             <div className="w-full flex justify-center items-center mb-5">
               <span>NPC ID: </span>
-              <input type="text" className="px-2 rounded-md border-dashed" defaultValue={3} onChange={handleNpcIdChange}></input>
+              <input type="text" className="px-2 rounded-md border-dashed ml-2 ring-zinc-400 ring-1" defaultValue={3} onChange={handleNpcIdChange}></input>
             </div>
             <div className="flex gap-x-2">
                 {nodeList.map((_, index) => (
