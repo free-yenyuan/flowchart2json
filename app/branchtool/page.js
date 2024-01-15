@@ -6,9 +6,14 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 export default function BranchTool() {
     const [nodeList, setNodeList] = useState([{ output: "" }]);
     const [finalOutput, setOutput] = useState("");
+    const [npcId,setNpcId] = useState(3);
     const handleAddNode = () => {
         setNodeList([...nodeList, { output: "" }]);
     };
+
+    const handleNpcIdChange = (event)=>{
+      setNpcId(event.target.value);
+    }
 
     const handleOutputChange = useCallback(
         (value, index) => {
@@ -47,12 +52,16 @@ export default function BranchTool() {
 
     useEffect(() => {
         setOutput(
-            "{3:[" + nodeList.map((_, index) => nodeList[index].output) + "]}"
+            "{"+npcId+":[" + nodeList.map((_, index) => nodeList[index].output) + "]}"
         );
-    }, [nodeList]);
+    }, [nodeList,npcId]);
 
     return (
         <div>
+            <div className="w-full flex justify-center items-center mb-5">
+              <span>NPC ID: </span>
+              <input type="text" className="px-2 rounded-md border-dashed" defaultValue={3} onChange={handleNpcIdChange}></input>
+            </div>
             <div className="flex gap-x-2">
                 {nodeList.map((_, index) => (
                     <Node
