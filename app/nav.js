@@ -37,6 +37,9 @@ export function Nav() {
             {value.title}
           </Link>
         ))}
+        <Link href="./webvideo.mp4" download>
+          下载
+        </Link>
       </div>
     </nav>
   );
